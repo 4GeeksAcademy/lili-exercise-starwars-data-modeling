@@ -7,26 +7,51 @@ from eralchemy2 import render_er
 
 Base = declarative_base()
 
-class Person(Base):
-    __tablename__ = 'person'
-    # Here we define columns for the table person
-    # Notice that each column is also a normal Python instance attribute.
-    id = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=False)
+#This is for the blog users
+class User(Base):
+    __tablename__ = "User"
+    #Columns
 
-class Address(Base):
-    __tablename__ = 'address'
-    # Here we define columns for the table address.
-    # Notice that each column is also a normal Python instance attribute.
-    id = Column(Integer, primary_key=True)
-    street_name = Column(String(250))
-    street_number = Column(String(250))
-    post_code = Column(String(250), nullable=False)
-    person_id = Column(Integer, ForeignKey('person.id'))
-    person = relationship(Person)
+    #Relationships
 
-    def to_dict(self):
-        return {}
+#Users can save their fav planets and characters
+class Favorite(Base):
+    __tablename__ = "Favorite"
+    #Columns
+
+    #Relationships
+
+class Character(Base):
+    __tablename__ = "Name"
+    #Columns
+
+    #Relationships
+    
+class Planet(Base):
+    __tablename__ = "Planet"
+    #Columns
+
+    #Relationships
+
+class Starship(Base):
+    __tablename__ = "Starship"
+    #Columns
+
+    #Relationships
+
+class Specie(Base):
+    __tablename__ = "Specie"
+    #Columns
+
+    #Relationships
+
+class Films(Base):
+    __tablename__ = "Films"
+    #Columns
+
+    #Relationships
+
+
 
 ## Draw from SQLAlchemy base
 render_er(Base, 'diagram.png')
