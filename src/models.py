@@ -11,28 +11,35 @@ Base = declarative_base()
 class User(Base):
     __tablename__ = "User"
     #Columns
-    ID = Column()
+    ID = Column(Integer, primary_key=True)
     username = Column()
     password = Column()
     email = Column()
 
     #Relationships
 
+
 #Users can save their fav planets and characters, BRIDGE?
-class Favorite(Base):
+class Favorite(Base): #✔
     __tablename__ = "Favorite"
     #Columns
-    ID = Column()
-    user_id = Column() #foreignkey user
-    planet_id = Column() #foreignkey planet
-    character_id = Column() #foreignkey character
+    ID = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('User.ID')) #foreignkey to User 
+    planet_id = Column(Integer, ForeignKey('Planet.ID')) #foreignkey to Planet 
+    character_id = Column() #foreignkey to Character 
 
     #Relationships
+    user = relationship("User")  #Establish relationship with User table, remove '_id' suffix
+    planet = relationship("Planet") #Relationship with Planet table
+    character = relationship("Character") #Rel. with Character 
+
+
+
 
 class Character(Base):
     __tablename__ = "Character"
     #Columns
-    ID = Column()
+    ID = Column(Integer, primary_key=True)
     name = Column()
     homeplanet_id = Column() #foreignkey planet
     starships_id = Column() #foreignkey starship
@@ -40,10 +47,13 @@ class Character(Base):
 
     #Relationships
     
+
+
+
 class Planet(Base):
     __tablename__ = "Planet"
     #Columns
-    ID = Column()
+    ID = Column(Integer, primary_key=True)
     name = Column()
     climate = Column()
     terrain = Column()
@@ -51,20 +61,26 @@ class Planet(Base):
 
     #Relationships
 
+
+
+
 class Starship(Base):
     __tablename__ = "Starship"
     #Columns
-    ID = Column()
+    ID = Column(Integer, primary_key=True)
     name = Column()
     starship_class = Column()
     pilots_id = Column() #foreignkey characters
 
     #Relationships
 
+
+
+
 class Specie(Base):
     __tablename__ = "Specie"
     #Columns
-    ID = Column()
+    ID = Column(Integer, primary_key=True)
     name = Column()
     classification = Column()
     homeplanet_id = Column() #foreignkey planet
@@ -72,10 +88,13 @@ class Specie(Base):
 
     #Relationships
 
+
+
+
 class Films(Base):
     __tablename__ = "Films"
     #Columns
-    ID = Column()
+    ID = Column(Integer, primary_key=True)
     title = Column()
     episode_id  = Column()
     director = Column()
@@ -83,6 +102,8 @@ class Films(Base):
     species_id = Column() #foreignkey specie
 
     #Relationships
+
+
 
 
 
