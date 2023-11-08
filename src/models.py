@@ -42,25 +42,25 @@ class Favorite(Base): #✔
 
 class Character(Base):
     __tablename__ = "Character"
-    #Columns
+    # Columns
     ID = Column(Integer, primary_key=True, nullable=False)
     name = Column(String(250), nullable=False)
-    homeplanet_id = Column(Integer, ForeignKey('Planet.ID')) #foreignkey planet
-    starships_id = Column(Integer, ForeignKey('Starship.ID')) #foreignkey starship
+    homeplanet_id = Column(Integer, ForeignKey('Planet.ID')) # foreign key to Planet
+    starships_id = Column(Integer, ForeignKey('Starship.ID')) # foreign key to Starship
     birth_year = Column(String(250), nullable=False)
 
-    #Relationships
-    homeplanet = relationship('Planet') #1 to 1
-    starships = relationship('Starship') #1 to many
+    # Relationships
+    homeplanet = relationship('Planet', backref='residents') # 1 to many
+    starships = relationship('Starship', backref='pilots') # 1 to many
 
 
 class Planet(Base):
     __tablename__ = "Planet"
     #Columns
     ID = Column(Integer, primary_key=True, nullable=False)
-    name = Column()
-    climate = Column()
-    terrain = Column()
+    name = Column(String(250), nullable=False)
+    climate = Column(String(250), nullable=False)
+    terrain = Column(String(250), nullable=False)
     residents_id = Column(Integer, ForeignKey('Character.ID')) #Foreignkey characters
 
     #Relationships
@@ -72,12 +72,12 @@ class Starship(Base):
     __tablename__ = "Starship"
     #Columns
     ID = Column(Integer, primary_key=True, nullable=False)
-    name = Column()
-    starship_class = Column()
-    pilots_id = Column() #foreignkey characters
+    name = Column(String(250), nullable=False)
+    starship_class = Column(String(250), nullable=False)
+    pilots_id = Column(Integer, ForeignKey('Character.ID')) #foreignkey characters
 
     #Relationships
-
+    pilots = relationship("Character", backref="starships")
 
 
 
@@ -85,28 +85,28 @@ class Specie(Base):
     __tablename__ = "Specie"
     #Columns
     ID = Column(Integer, primary_key=True, nullable=False)
-    name = Column()
-    classification = Column()
-    homeplanet_id = Column() #foreignkey planet
-    people_id = Column() #foreignkey characters
+    name = Column(String(250), nullable=False)
+    classification = Column(String(250), nullable=False)
+    homeplanet_id = Column(Integer, ForeignKey('Planet.ID')) #foreignkey planet
+    people_id = Column(Integer, ForeignKey('Character.ID')) #foreignkey characters
 
     #Relationships
+    homeplanet = relationship("Planet", backref="species")
+    people = relationship("Character", backref="specie")
 
 
 
-
-class Films(Base):
+class Film(Base):
     __tablename__ = "Films"
     #Columns
     ID = Column(Integer, primary_key=True, nullable=False)
-    title = Column()
-    episode_id  = Column()
-    director = Column()
-    characters_id = Column() #foreignkey characters
-    species_id = Column() #foreignkey specie
+    title = Column(String(250), nullable=False)
+    episode_id  = Column(Integer, unique=True)
+    director = Column(String(250), nullable=False)
+    species_id = Column(Integer, ForeignKey('Specie.ID')) #foreignkey specie
 
     #Relationships
-
+    species = relationship("Specie", backref="film")
 
 
 
